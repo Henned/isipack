@@ -77,14 +77,14 @@
                 <h2 class="text-xl font-bold">Warenkorb
                 </h2>
                 <div class="mt-8">
-                    <div class="flex flex-col space-y-4">
+                    <div class="flex flex-col space-y-4 md:w-full">
                         @foreach (Cart::content() as $item)
                         <div class="flex space-x-4">
                             <div>
                                 <img src="{{$item->model->image}}" alt="{{$item->model->name}}" class="w-60">
                             </div>
                             <div>
-                                <h2 class="text-xl font-bold">{{$item->name}}</h2>
+                                <h2 class="text-base font-bold md:text-lg">{{$item->name}}</h2>
                                 <p class="text-sm">{{$item->model->short_description}}</p>
                                 <div class="flex items-center mt-2">
                                     <button wire:click.prevent="increaseQty('{{$item->rowId}}')" class="text-gray-500 dark:text-white focus:outline-none focus:text-gray-600">
