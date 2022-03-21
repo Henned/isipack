@@ -127,8 +127,6 @@
 
                 function validateForm() {
 
-
-                    console.log((firstName.value && lastName.value && email.value && street.value && housenumber.value && city.value && postcode.value) != "");
                     if ((firstName.value && lastName.value && email.value && street.value && housenumber.value && city.value && postcode.value) != "") {
                         return true;
                     } else {
