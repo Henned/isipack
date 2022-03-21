@@ -4,6 +4,7 @@ use App\Http\Livewire\Home;
 use App\Http\Livewire\Shop;
 use App\Http\Livewire\Details;
 use App\Http\Livewire\Checkout;
+use App\Http\Livewire\Thankyou;
 use App\Http\Controllers\Import;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Dashboard;
@@ -26,7 +27,7 @@ Route::get('/p/{slug}', Details::class)->name('product.details');
 Route::get('/checkout', Checkout::class)->name('checkout');
 Route::get('/search', SearchComponent::class)->name('product.search');
 Route::get('/dashboard', Home::class)->name('dashboard');
+Route::get('/thankyou', Thankyou::class)->name('thankyou');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/admin/upload', [Import::class, 'create'])->name('excel.upload');
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
-

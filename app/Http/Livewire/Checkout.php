@@ -2,11 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use Cart;
+use Livewire\Component;
+use Illuminate\Support\Facades\Session;
 
 class Checkout extends Component
 {
+    public $cartContent;
+
+    public function mount()
+    {
+        $this->cartContent = Cart::content()->all();
+    }
 
     public function increaseQty($id)
     {

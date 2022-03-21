@@ -20,10 +20,10 @@
                 </div>
             </div>
             <div class="mt-3">
-                <label class="text-gray-700 dark:text-white text-sm" for="count">Version:</label>
+                <label class="text-gray-700 dark:text-white text-sm" for="count">Ähnliche Artikel:</label>
                 <div class="flex items-center mt-1 flex-wrap">
                     @foreach ($product_version as $item)
-                    <div class="w-2/6 border border-sky-500 rounded-md shadow-md overflow-hidden mb-2 mx-1">
+                    <div class="w-2/6 border border-sky-500 rounded-md shadow-md overflow-hidden mb-2 mx-1 px-1">
                         <div class="text-xs px-2">
                             <a href="{{ route('product.details', ['slug'=>$item->slug]) }}">
                                 <h3 class="text-gray-700 dark:text-white uppercase">{{$item->name}} <br> {{$item->version}}</h3>
