@@ -173,8 +173,6 @@
 
                         .addEventListener('change', function(event) {
 
-
-                            // Enable or disable the button when it is checked or unchecked
                             if (validateForm() === true) {
 
                             actions.enable();
@@ -188,14 +186,7 @@
                         });
 
                     },
-
-
-                        // onClick is called when the button is clicked
-
                         onClick: function() {
-
-
-                        // Show a validation error if the checkbox is not checked
 
                         if (validateForm() === false) {
 
