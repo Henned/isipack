@@ -17,7 +17,7 @@ class PayPalController extends Controller
         $data = json_decode($request->getContent(), true);
         // Init PayPal
         $provider = \PayPal::setProvider();
-        $provider->setApiCredentials(env('paypal'));
+        $provider->setApiCredentials(config('paypal'));
         $token = $provider->getAccessToken();
         $provider->setAccessToken($token);
 
@@ -89,7 +89,7 @@ class PayPalController extends Controller
 
         // Init PayPal
         $provider = \PayPal::setProvider();
-        $provider->setApiCredentials(env('paypal'));
+        $provider->setApiCredentials(config('paypal'));
         $token = $provider->getAccessToken();
         $provider->setAccessToken($token);
 
