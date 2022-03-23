@@ -17,11 +17,10 @@ class PayPalController extends Controller
         $data = json_decode($request->getContent(), true);
         // Init PayPal
         $provider = \PayPal::setProvider();
-        $provider->setApiCredentials(config('paypal'));
+        $provider->setApiCredentials(env('paypal'));
         $token = $provider->getAccessToken();
         $provider->setAccessToken($token);
 
-        // Test Values
         $price = $data['value'];
         $description = 'Einkauf bei Isipack24.de';
 
@@ -90,7 +89,7 @@ class PayPalController extends Controller
 
         // Init PayPal
         $provider = \PayPal::setProvider();
-        $provider->setApiCredentials(config('paypal'));
+        $provider->setApiCredentials(env('paypal'));
         $token = $provider->getAccessToken();
         $provider->setAccessToken($token);
 
