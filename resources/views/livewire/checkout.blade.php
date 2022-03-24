@@ -198,7 +198,7 @@
                     // Call your server to set up the transaction
                     
                     createOrder: function(data, actions) {
-                        return fetch('api/paypal/order/create/', {
+                        return fetch('api/paypal/order/create', {
                             method: 'post',
                             body: JSON.stringify({
                                 "content" : {!! json_encode($cartContent, JSON_HEX_TAG) !!},
