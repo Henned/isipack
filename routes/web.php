@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Shop;
+use App\Http\Livewire\Upload;
 use App\Http\Livewire\Details;
 use App\Http\Livewire\Checkout;
 use App\Http\Livewire\Thankyou;
@@ -29,5 +30,10 @@ Route::get('/search', SearchComponent::class)->name('product.search');
 Route::get('/dashboard', Home::class)->name('dashboard');
 Route::get('/thankyou', Thankyou::class)->name('thankyou');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/admin/upload', [Import::class, 'create'])->name('excel.upload');
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
+
+
+Route::prefix('admin')->group(function () {
+    Route::middleware(['auth:sanctum', 'verified'])->post('/create', [Import::class, 'create'])->name('excel.upload');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/upload', Upload::class)->name('admin.upload');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Dashboard::class)->name('admin.dashboard');
+});

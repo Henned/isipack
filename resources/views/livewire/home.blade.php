@@ -45,7 +45,7 @@
                 "autoPlay": 3000,
                 "pauseAutoPlayOnHover": true,
                 "wrapAround": true }'>
-
+                
             @foreach ($products as $product)
                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden mx-4">
                     <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('{{ asset($product->image) }}')">

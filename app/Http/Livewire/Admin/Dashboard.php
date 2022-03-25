@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Order;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -9,6 +10,7 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('livewire.admin.dashboard')->layout('layouts.app');
+        $orders = Order::get();
+        return view('livewire.admin.dashboard', ['orders' => $orders])->layout('layouts.app');
     }
 }

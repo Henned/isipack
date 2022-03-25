@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('paypal')->group(function () {
     Route::post('/order/create', [PayPalController::class, 'create']);
     Route::post('/order/capture', [PayPalController::class, 'capture']);
+    Route::post('/order/cancle', [PayPalController::class, 'cancle']);
 });

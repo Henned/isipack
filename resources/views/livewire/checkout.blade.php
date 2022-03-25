@@ -221,7 +221,7 @@
         
                     // Call your server to finalize the transaction
                     onApprove: function(data, actions) {
-                        return fetch('/api/paypal/order/capture/', {
+                        return fetch('/api/paypal/order/capture', {
                             method: 'post',
                             body: JSON.stringify({
                                 orderID : data.orderID
@@ -251,7 +251,20 @@
                             }
         
                             // Successful capture! For demo purposes:
-                            actions.redirect('{{route('thankyou')}}');
+                            actions.redirect("{{route('thankyou')}}");
+                        });
+                    },
+                    onCancel: function (data) {
+
+                        return fetch('api/paypal/order/cancle', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                orderID : data.orderID
+                            })
+                        }).then(function(res) {
+                            return res.json();
+                        }).then(function(orderData) {
+                            return orderData.id;
                         });
                     }
         

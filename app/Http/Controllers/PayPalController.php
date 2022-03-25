@@ -103,4 +103,20 @@ class PayPalController extends Controller
 
         return response()->json($result);
     }
+
+    public function cancle(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $orderID = $data['orderID'];
+
+        // Init PayPal
+        $provider = \PayPal::setProvider();
+        $provider->setApiCredentials(config('paypal'));
+        $token = $provider->getAccessToken();
+        $provider->setAccessToken($token);
+
+        $result = $provider->capturePaymentOrder($orderID);
+        $order = Transaction::where('reference_number', $orderID)->first();
+        Order::where('id', $order->order_id)->delete();
+    }
 }
