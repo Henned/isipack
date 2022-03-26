@@ -15,6 +15,11 @@ class OrderDetails extends Component
         $this->order_id = $id;
     }
 
+    public function status($order_id)
+    {
+        Order::where('id', $order_id)->update(['status' => 'Wurde Geliefert']);
+    }
+
     public function render()
     {
         

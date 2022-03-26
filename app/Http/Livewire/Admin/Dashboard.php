@@ -11,7 +11,6 @@ class Dashboard extends Component
     public function status($order_id)
     {
         Order::where('id', $order_id)->update(['status' => 'Wurde Geliefert']);
-        
     }
 
     public function render()
