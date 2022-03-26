@@ -1,6 +1,6 @@
 <div class="container mx-auto px-6">
-    <h3 class="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
-    <span class="mt-3 text-sm text-gray-500">200+ Products</span>
+    <h3 class="text-gray-700 text-2xl font-medium mt-6">Alle Produkte</h3>
+    <span class="mt-3 text-sm text-gray-500">{{$products->total()}} Produkte</span>
     <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
         @foreach ($products as $product)          
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
@@ -13,18 +13,34 @@
                 </a>
                 <div class="px-5 py-3">
                     <h3 class="text-gray-700 uppercase">{{$product->name}}</h3>
-                    <span class="text-gray-500 mt-2">{{$product->regular_price}}</span>
+                    <span class="text-gray-500 mt-2">{{$product->regular_price}}€</span>
                 </div>
             </div>
         @endforeach
     </div>
     <div class="flex justify-center">
         <div class="flex rounded-md mt-8">
-            <a href="#" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white"><span>Previous</a></a>
-            <a href="?page=1" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>1</span></a>
-            <a href="?page=2" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>2</span></a>
-            <a href="?page=3" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>3</span></a>
-            <a href="#" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white"><span>Next</span></a>
+            @if($products->hasMorePages())
+                <button wire:click.prevent="loadMore">Load more</button>
+            @endif
         </div>
     </div>
+    <div
+        x-data="{
+            observe () {
+                let observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            @this.call('loadMore')
+                        }
+                    })
+                }, {
+                    root: null
+                })
+
+                observer.observe(this.$el)
+            }
+        }"
+        x-init="observe"
+    ></div>
 </div>

@@ -1,43 +1,67 @@
-<div class="container mx-auto py-12">
-    <section class="container mx-auto p-6 font-mono">
-        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-          <div class="w-full overflow-x-auto">
-            <table class="w-full">
-              <thead>
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                  <th class="px-4 py-3">Name</th>
-                  <th class="px-4 py-3">Preis</th>
-                  <th class="px-4 py-3">Bezahlstatus</th>
-                  <th class="px-4 py-3">Bestelldatum</th>
+<div class="flex items-center justify-center" >
+  <section class="container mx-auto py-12">
+    <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+      <thead class="text-white">
+        @foreach ($orders as $order)
+          <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-4 sm:mb-0">
+            <th class="border-grey-light border text-left p-3 truncate">Name</th>
+            <th class="border-grey-light border text-left p-3 truncate">Preis</th>
+            <th class="border-grey-light border text-left p-3 truncate">Bezahlstatus</th>
+            <th class="border-grey-light border text-left p-3 truncate">Bestelldatum</th>
+            <th class="border-grey-light border text-left p-3 truncate">Bestellstatus</th>
+            <th class="border-grey-light border text-left p-3 truncate">Actions</th>
+          </tr>
+        @endforeach
+      </thead>
+      <tbody class="flex-1 sm:flex-none">
+        @if ($orders->count() > 0)
+              @foreach ($orders as $order)
+              <tr class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0">
+                <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->Vorname}} {{$order->Nachname}}</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{number_format($order->orderItems->sum('total') , 2)}}€</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">
+                    @if ($order->transaction->status === "COMPLETED")
+                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Abgeschlossen </span>
+                    @else
+                        <span class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm"> Ausstehend </span>    
+                    @endif
+                </td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{date('d-m-Y H:i', strtotime($order->created_at))}} Uhr</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{$order->status}}</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer" height="50px">
+                  <a href="{{ route('admin.details',['id'=>$order->id]) }}">Anzeigen</a>
+                  <button wire:click="status({{$order->id}})">Geliefert</button>
+                </td>
+              </tr>
+              @endforeach
+            @else
+                <tr>
+                  <td colspan="6" class="text-center text-3xl py-4">
+                    Keine neuen Bestellungen!
+                  </td>
                 </tr>
-              </thead>
-              <tbody class="bg-white">
-                @foreach ($orders as $item)
-                    <tr class="text-gray-700">
-                        <td class="px-4 py-3 border">
-                            <div class="flex items-center text-sm">
-                                <div>
-                                    <p class="font-semibold text-black">{{ $item->Vorname}} {{$item->Nachname}} </p>
-                                    @if ($item->Firma != null)
-                                        <p class="text-xs text-gray-600">{{$item->Firma}}</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3 text-ms font-semibold border">{{number_format($item->orderItems->sum('total') , 2)}}€</td>
-                        <td class="px-4 py-3 text-xs border">
-                            @if ($item->transaction->status === "COMPLETED")
-                                <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Abgeschlossen </span>
-                            @else
-                                <span class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm"> Ausstehend </span>    
-                            @endif
-                        </td>
-                        <td class="px-4 py-3 text-sm border">{{date('d-m-Y H:i', strtotime($item->created_at))}} Uhr</td>
-                    </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+            @endif
+      </tbody>
+    </table>
+  </section>
 </div>
+<style>
+
+  @media (min-width: 640px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+/* 
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  } */
+</style>

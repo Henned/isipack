@@ -2,14 +2,15 @@
 
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Shop;
-use App\Http\Livewire\Upload;
 use App\Http\Livewire\Details;
 use App\Http\Livewire\Checkout;
 use App\Http\Livewire\Thankyou;
 use App\Http\Controllers\Import;
+use App\Http\Livewire\Admin\Upload;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\SearchComponent;
+use App\Http\Livewire\Admin\OrderDetails;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +33,9 @@ Route::get('/thankyou', Thankyou::class)->name('thankyou');
 
 
 
-Route::prefix('admin')->group(function () {
-    Route::middleware(['auth:sanctum', 'verified'])->post('/create', [Import::class, 'create'])->name('excel.upload');
-    Route::middleware(['auth:sanctum', 'verified'])->get('/upload', Upload::class)->name('admin.upload');
-    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Dashboard::class)->name('admin.dashboard');
+Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->group(function () {
+    Route::post('/create', [Import::class, 'create'])->name('excel.upload');
+    Route::get('/upload', Upload::class)->name('admin.upload');
+    Route::get('/dashboard', Dashboard::class)->name('admin.dashboard');
+    Route::get('/order/{id}', OrderDetails::class)->name('admin.details');
 });

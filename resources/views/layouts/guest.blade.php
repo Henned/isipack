@@ -86,9 +86,15 @@
                                         {{ Auth::user()->email }}
                                     </div>
 
-                                    <x-jet-dropdown-link href="{{ route('admin.dashboard') }}">
-                                        {{ __('Dashboard') }}
-                                    </x-jet-dropdown-link>
+                                    @if (Auth::user()->isAdmin())
+                                        <x-jet-dropdown-link href="{{ route('admin.dashboard') }}">
+                                            {{ __('Dashboard') }}
+                                        </x-jet-dropdown-link>
+                                    @else
+                                        <x-jet-dropdown-link href="{{ route('shop') }}">
+                                            {{ __('Dashboard') }}
+                                        </x-jet-dropdown-link>
+                                    @endif
 
                                     <div class="border-t border-gray-100"></div>
 
