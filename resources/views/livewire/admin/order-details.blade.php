@@ -1,7 +1,11 @@
-
+<x-slot name="header">
+  <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+      Bestellung {{$order->order_id}} 
+  </h2>
+</x-slot>
 <div class="container mx-auto py-12">
     <section class="container mx-auto py-12">
-        <h2>Bestellinformationen</h2>
+        <h2 class="text-xl text-center underline">Bestellinformationen</h2>
         <table class="w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 table-auto">
           <thead class="text-white">
               <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row  mb-4 sm:mb-0">
@@ -19,7 +23,7 @@
           </thead>
           <tbody class="flex-1 sm:flex-none">
                   <tr class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0">
-                    <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->id}}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->order_id}}</td>
                     @if ($order->Firma)
                     <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->Firma}}</td>
                     @endif
@@ -42,11 +46,13 @@
         </table>
     </section>
     <section class="container mx-auto py-12">
-        <h2>Lieferinformationen</h2>
+        <h2 class="text-xl text-center underline">Lieferinformationen</h2>
         <table class="w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 table-auto">
           <thead class="text-white">
               <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row  mb-4 sm:mb-0">
+                @if ($order->Firma)
                 <th class="border-grey-light border text-left p-3 truncate">Firma</th>
+                @endif
                 <th class="border-grey-light border text-left p-3 truncate">Name</th>
                 <th class="border-grey-light border text-left p-3 truncate">E-Mail</th>
                 <th class="border-grey-light border text-left p-3 truncate">Adresse</th>
@@ -57,7 +63,9 @@
           </thead>
           <tbody class="flex-1 sm:flex-none">
                   <tr class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0">
-                    <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->id}}</td>
+                    @if ($order->Firma)
+                    <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->Firma}}</td>
+                    @endif
                     <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->Vorname}} {{$order->Nachname}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{ $order->Email}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">
@@ -73,7 +81,7 @@
         </table>
     </section>
     <section class="container mx-auto py-12">
-          <h2>Bestellung</h2>
+        <h2 class="text-xl text-center underline">Bestellung</h2>
         <table class="w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 table-auto">
           <thead class="text-white">
             @foreach ($orderItems as $item)

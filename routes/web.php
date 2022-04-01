@@ -6,6 +6,7 @@ use App\Http\Livewire\Details;
 use App\Http\Livewire\Checkout;
 use App\Http\Livewire\Thankyou;
 use App\Http\Controllers\Import;
+use App\Http\Livewire\Admin\Stats;
 use App\Http\Livewire\Admin\Upload;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Dashboard;
@@ -36,6 +37,7 @@ Route::get('/thankyou', Thankyou::class)->name('thankyou');
 Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/create', [Import::class, 'create'])->name('excel.upload');
     Route::get('/upload', Upload::class)->name('admin.upload');
+    Route::get('/stats', Stats::class)->name('admin.stats');
     Route::get('/dashboard', Dashboard::class)->name('admin.dashboard');
     Route::get('/order/{id}', OrderDetails::class)->name('admin.details');
 });

@@ -5,6 +5,9 @@
             </h2>
             <div class="justify-center w-full mx-auto">
                 <form id="form" class="">
+                    <input type="hidden" name="user_id" id="user_id" @if (Auth::user())
+                    value="{{Auth::user()->id}}"
+                    @endif >
                     <div class="mt-4">
                         <div class="w-full">
                             <label for="company"
@@ -15,23 +18,26 @@
                     </div>
                     <div class="space-x-0 lg:flex lg:space-x-4 mt-4">
                         <div class="w-full lg:w-1/2">
-                            <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">First
-                                Name</label>
-                            <input required name="firstName" id="firstName" type="text" placeholder="First Name"
+                            <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Vorname</label>
+                            <input required name="firstName" id="firstName" type="text" placeholder="Vorname"
                                 class="w-full text-gray-700 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                         </div>
                         <div class="w-full lg:w-1/2 ">
-                            <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Last
-                                Name</label>
-                            <input required name="lastName" id="lastName" type="text" placeholder="Last Name"
+                            <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Nachname</label>
+                            <input required name="lastName" id="lastName" type="text" placeholder="Nachname"
                                 class="w-full text-gray-700 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                         </div>
                     </div>
                     <div class="mt-4">
                         <div class="w-full">
                             <label for="Email"
-                                class="block mb-3 text-sm font-semibold text-gray-500">Email</label>
-                            <input required name="email" id="email" type="email" placeholder="Email"
+                                class="block mb-3 text-sm font-semibold text-gray-500">E-Mail Adresse</label>
+                            <input required name="email" id="email" type="email"
+                            @if (Auth::user())
+                            value="{{Auth::user()->email}}"
+                            @else
+                            placeholder="E-Mail Adresse"
+                            @endif
                                 class="w-full text-gray-700 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                         </div>
                     </div>
@@ -48,16 +54,16 @@
                         </div>
                     </div>
                     <div class="space-x-0 lg:flex lg:space-x-4 mt-4">
-                        <div class="w-full lg:w-1/2">
-                            <label for="city"
-                                class="block mb-3 text-sm font-semibold text-gray-500">City</label>
-                            <input required name="city" id="city" type="text" placeholder="City"
-                                class="w-full text-gray-700 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
-                        </div>
                         <div class="w-full lg:w-1/2 ">
                             <label for="postcode" class="block mb-3 text-sm font-semibold text-gray-500">
-                                Postcode</label>
-                            <input required name="postcode" id="postcode" type="text" placeholder="Post Code"
+                                Postleitzahl</label>
+                            <input required name="postcode" id="postcode" type="text" placeholder="Postleitzahl"
+                                class="w-full text-gray-700 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
+                        </div>
+                        <div class="w-full lg:w-1/2">
+                            <label for="city"
+                                class="block mb-3 text-sm font-semibold text-gray-500">Stadt</label>
+                            <input required name="city" id="city" type="text" placeholder="Stadt"
                                 class="w-full text-gray-700 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                         </div>
                     </div>
@@ -127,7 +133,7 @@
 
                 function validateForm() {
 
-                    if ((firstName.value && lastName.value && email.value && street.value && housenumber.value && city.value && postcode.value) != "") {
+                    if (((firstName.value && lastName.value && email.value && street.value && housenumber.value && city.value && postcode.value) != "") && !isNaN(housenumber.value) && (!isNaN(postcode.value) && (postcode.value.length === 5) && (postcode.value != '00000'))) {
                         return true;
                     } else {
                         return false;
@@ -148,13 +154,14 @@
                     if (street.value === "") {
                         street.classList.add("border-red-500")
                     }
-                    if (housenumber.value === "") {
+                    if ((housenumber.value === "") || (isNaN(housenumber.value))) {
                         housenumber.classList.add("border-red-500")
                     }
+
                     if (city.value === "") {
                         city.classList.add("border-red-500")
                     }
-                    if (postcode.value === "") {
+                    if ((postcode.value === "") || isNaN(postcode.value) || (postcode.value.length != 5) || (postcode.value === '00000')) {
                         postcode.classList.add("border-red-500")
                     }
 
@@ -167,6 +174,7 @@
 
                         if (validateForm() === false) {
                             actions.disable();    
+                            showError();
                         }
      
                         document.querySelector('#form')
@@ -180,6 +188,7 @@
                             } else {
 
                             actions.disable();
+                            showError();
 
                             }
 
@@ -203,6 +212,7 @@
                             body: JSON.stringify({
                                 "content" : {!! json_encode($cartContent, JSON_HEX_TAG) !!},
                                 "value" : "{{ Cart::subtotal() }}",
+                                'user_id': document.getElementById('user_id').value,
                                 "company" : document.getElementById('company').value,
                                 "firstName" : document.getElementById('firstName').value,
                                 "lastName" : document.getElementById('lastName').value,

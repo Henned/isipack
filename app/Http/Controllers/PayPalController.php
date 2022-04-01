@@ -53,7 +53,13 @@ class PayPalController extends Controller
             ]
         ]);
 
+        do {
+            $uniqueOrderID = 'Isi-' . random_int(100000000, 999999999);
+        } while (Order::where('order_id', '=', $uniqueOrderID)->first());
+
         $newOrder = Order::create([
+            'user_id' => $data['user_id'],
+            'order_id' => $uniqueOrderID,
             'Firma' => $data['company'],
             'Vorname' => $data['firstName'],
             'Nachname' => $data['lastName'],
@@ -63,6 +69,7 @@ class PayPalController extends Controller
             'Postleitzahl' => $data['postcode'],
             'Ort' => $data['city'],
         ]);
+        
         foreach($data['content'] as $item){
             OrderItem::create([
                 'product_id' => $item['id'],

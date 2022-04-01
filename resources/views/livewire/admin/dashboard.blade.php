@@ -1,3 +1,8 @@
+<x-slot name="header">
+  <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+      Dashboard
+  </h2>
+</x-slot>
 <div class="flex items-center justify-center" >
   <section class="container mx-auto py-12">
     <table class="w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 table-auto">
@@ -28,7 +33,7 @@
         @if ($orders->count() > 0)
               @foreach ($orders as $order)
               <tr class="flex flex-col flex-no wrap sm:table-row mb-4 sm:mb-0">
-                <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->id}}</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->order_id}}</td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3" height="50px">{{ $order->Vorname}} {{$order->Nachname}}</td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{number_format($order->orderItems->sum('total') , 2)}}€</td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">

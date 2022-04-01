@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id')->unique();
+            $table->string('user_id')->nullable();
             $table->string('Firma')->nullable();
             $table->string('Vorname');
             $table->string('Nachname');
@@ -23,7 +25,6 @@ return new class extends Migration
             $table->string('Hausnummer');
             $table->string('Postleitzahl');
             $table->string('Ort');
-            $table->boolean('read')->default(false);
             $table->enum('status',['Bestellt','Wird Geliefert', 'Wurde Geliefert','Storniert'])->default('Bestellt');
             $table->timestamps();
         });
