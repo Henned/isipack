@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use Carbon\Carbon;
+use App\Models\Visitor;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
@@ -12,18 +13,15 @@ class Stats extends Component
 {
     public function render()
     {
-        $b = 0;
-        $a = 24;
+        $a = 0;
         $array = array();
         do {
-            $today = Carbon::now()->subHours($b)->getTimestamp();
-            $yesterday = Carbon::now()->subHours($a)->getTimestamp();
-            $session = DB::table('sessions')->whereBetween('last_activity', [$yesterday, $today])->get();
-            $visitorCount = $session->count();
+            $yesterday = Carbon::now()->subDays($a)->toDateString();
+            $visitors = Visitor::where('date', $yesterday)->get();
+            $visitorCount = $visitors->count();
             array_push($array, $visitorCount);
-            $b += 24;
-            $a += 24;
-        } while ($a <= 720);
+            $a += 1;
+        } while ($a <= 30);
         $columnChartModel = (new LineChartModel())
 
             ->singleLine()
@@ -40,7 +38,7 @@ class Stats extends Component
             }elseif ($key === 1){
                 $columnChartModel->addPoint('Gestern', $visit);
             }else{
-                $columnChartModel->addPoint('Vor ' .$key+1 .' Tagen', $visit);
+                $columnChartModel->addPoint('Vor ' .$key .' Tagen', $visit);
             }
         }
 

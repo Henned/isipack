@@ -18,6 +18,12 @@
                     <x-jet-nav-link href="{{ route('admin.upload') }}" :active="request()->routeIs('admin.upload')">
                         {{ __('Upload') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('admin.products') }}" :active="request()->routeIs('admin.products')">
+                        {{ __('Produkte') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('admin.stats') }}" :active="request()->routeIs('admin.stats')">
+                        {{ __('Statistiken') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 

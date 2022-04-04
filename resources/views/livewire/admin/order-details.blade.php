@@ -36,10 +36,14 @@
                             <span class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100"> Ausstehend </span>    
                         @endif
                     </td>
-                    <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{date('d-m-Y H:i', strtotime($order->created_at))}} Uhr</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{date('H:i', strtotime($order->created_at)) .' Uhr am ' . date('d.m.Y', strtotime($order->created_at))}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{$order->status}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer flex justify-between" height="50px">
-                      <button wire:click="status({{$order->id}})">Geliefert</button>
+                      <button wire:click="status('{{$order->id}}', '{{$order->status}}')">@if ($order->status==="Bestellt")
+                        Geliefert
+                        @else
+                        Bestellt
+                      @endif</button>
                     </td>
                   </tr>
           </tbody>
@@ -74,7 +78,11 @@
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{ $order->Postleitzahl}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate" height="50px">{{ $order->Ort}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer flex justify-between" height="50px">
-                      <button wire:click="status({{$order->id}})">Geliefert</button>
+                      <button wire:click="status('{{$order->id}}', '{{$order->status}}')">@if ($order->status==="Bestellt")
+                        Geliefert
+                        @else
+                        Bestellt
+                      @endif</button>
                     </td>
                   </tr>
           </tbody>

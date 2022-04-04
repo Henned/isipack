@@ -35,6 +35,7 @@
             }
           
         </style>
+        <script src="https://kit.fontawesome.com/a601782134.js" crossorigin="anonymous"></script>
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>

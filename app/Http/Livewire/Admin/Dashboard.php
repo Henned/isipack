@@ -7,15 +7,20 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
+    public $bookingStatus = 'Bestellt';
 
-    public function status($order_id)
+    public function status($order_id, $status)
     {
-        Order::where('id', $order_id)->update(['status' => 'Wurde Geliefert']);
+        if ($status === "Bestellt") {
+            Order::where('id', $order_id)->update(['status' => 'Wurde Geliefert']);
+        }elseif ($status === "Wurde Geliefert"){
+            Order::where('id', $order_id)->update(['status' => 'Bestellt']);
+        }
     }
 
     public function render()
     {
-        $orders = Order::where('status', 'Bestellt')->get();
+        $orders = Order::where('status', $this->bookingStatus)->get();
         return view('livewire.admin.dashboard', ['orders' => $orders])->layout('layouts.app');
     }
 }
