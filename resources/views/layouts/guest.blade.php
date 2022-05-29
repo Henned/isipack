@@ -92,7 +92,7 @@
                                             {{ __('Dashboard') }}
                                         </x-jet-dropdown-link>
                                     @else
-                                        <x-jet-dropdown-link href="{{ route('shop') }}">
+                                        <x-jet-dropdown-link href="{{ route('user.dashboard') }}">
                                             {{ __('Dashboard') }}
                                         </x-jet-dropdown-link>
                                     @endif

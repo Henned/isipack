@@ -7,6 +7,9 @@
     <div class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
         <button class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition" wire:click="deleteAll()">Alle Produkte löschen</button>
     </div>
+    <div class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <a href="{{ route('excel.export') }}" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">Produkte als Excel runterladen</a>
+    </div>
     <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
